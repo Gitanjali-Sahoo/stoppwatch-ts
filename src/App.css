@@ -3,3 +3,77 @@
     padding: 0;
     box-sizing: border-box;
 }
+.stopwatch-container {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.stopwatch-container h2 {
+    color: brown;
+    font-size: 3rem;
+    text-decoration: underline;
+    margin-bottom: 30px;
+}
+.stopwatch-container p {
+    font-size: 7rem;
+    font-weight: bold;
+}
+.button-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+.startBtn {
+    background-color: green;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+.pauseBtn {
+    background-color: #bcbb24;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+.splitBtn {
+    background-color: #32ad9e;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+.resetBtn {
+    background-color: rgb(212, 78, 21);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+.split-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0px 0px 40px;
+
+    font-weight: bold;
+}
+.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

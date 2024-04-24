@@ -4,12 +4,14 @@ const StopWatch: React.FC = () => {
     const [timer, setTimer] = useState<number>(0)
     const [isRunning, setIsRunning] = useState<boolean>(false)
     const [splitTime, setSplitTime] = useState<number[]>([])
+    const [isStarted, setIsStarted] = useState<boolean>(false)
 
     const timeInterval = useRef<number | null>(null)
 
     const handleStart = () => {
         if (isRunning) return
         setIsRunning(true)
+        setIsStarted(true)
         timeInterval.current = setInterval(() => {
             setTimer((prev) => prev + 1)
         }, 10)
@@ -26,10 +28,11 @@ const StopWatch: React.FC = () => {
         clearInterval(timeInterval.current!)
         setTimer(0)
         setSplitTime([])
+        setIsStarted(false)
     }
     const handleSplit = () => {
         if (!isRunning) return
-        setSplitTime([...splitTime, timer])
+        setSplitTime((prevSplit) => [...prevSplit, timer])
         setTimer(0)
     }
 
@@ -52,24 +55,59 @@ const StopWatch: React.FC = () => {
 
     return (
         <>
-            <div>
-                <h1>Stopwatch</h1>
-                <input type="button" value="Start" onClick={handleStart} />
-                <input type="button" value="Pause" onClick={handlePause} />
-                <input type="button" value="Split" onClick={handleSplit} />
-                <input type="button" value="Reset" onClick={handleReset} />
-                <div>
+            <div className="stopwatch-container">
+                <h2>Stopwatch</h2>
+                <p>
                     {hours}:{minutes}:{seconds}:{milliseconds}
+                </p>
+                <div className="button-container">
+                    <input
+                        type="button"
+                        value="Start"
+                        onClick={handleStart}
+                        className="startBtn"
+                    />
+
+                    <input
+                        type="button"
+                        value="Pause"
+                        onClick={handlePause}
+                        className={`pauseBtn${
+                            !isRunning || !isStarted ? ' disabled' : ''
+                        }`}
+                        disabled={!isRunning || !isStarted}
+                    />
+                    <input
+                        type="button"
+                        value="Split"
+                        onClick={handleSplit}
+                        className={`splitBtn ${!isRunning ? 'disabled' : ''}`}
+                        disabled={!isRunning}
+                    />
+                    <input
+                        type="button"
+                        value="Reset"
+                        onClick={handleReset}
+                        className={`resetBtn ${isRunning ? 'disabled' : ''}`}
+                        disabled={isRunning}
+                    />
                 </div>
-                <div>
-                    {splitTime.map((time, index: number) => {
-                        return (
-                            <ul key={index}>
-                                <li>{time}</li>
-                            </ul>
-                        )
-                    })}
-                </div>
+                <hr style={{ width: '80%', marginTop: '20px' }} />
+            </div>
+
+            <div style={{ display: 'flex' }} className="split-container">
+                {splitTime.map((time, index: number) => {
+                    const formattedTime = formatTime(time)
+                    return (
+                        <ul key={index}>
+                            <li>
+                                {formattedTime.hours}:{formattedTime.minutes}:
+                                {formattedTime.seconds}:
+                                {formattedTime.milliseconds}
+                            </li>
+                        </ul>
+                    )
+                })}
             </div>
         </>
     )
